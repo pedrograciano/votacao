@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sicred.votacao.model.Pauta;
 import br.com.sicred.votacao.service.PautaService;
+import br.com.sicred.votacao.service.SessaoVotacaoService;
+import br.com.sicred.votacao.service.VotacaoService;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -23,6 +25,12 @@ public class PautaController {
 	@Autowired
 	PautaService pautaService;
 
+	@Autowired
+	VotacaoService votacaoService;
+
+	@Autowired
+	SessaoVotacaoService sessaoService;
+	
 	@GetMapping("/pautas")
 	public ResponseEntity<List<Pauta>> get(){
 		List<Pauta> pautas =  pautaService.findAll();
@@ -45,5 +53,13 @@ public class PautaController {
 	public ResponseEntity<String> delete (@PathVariable Long id){
 		pautaService.delete(id);
 		 return new ResponseEntity<String>("Pauta apagada com sucesso", HttpStatus.OK);
+	}
+	
+  @GetMapping("/resultado/sessao/{id_sessao}/pauta/{id_pauta}")
+	public ResponseEntity<Pauta> resultadoVotacao(@PathVariable Long id_sessao, @PathVariable Long id_pauta) {
+		List<?> computaVotos = votacaoService.computaVotos(id_sessao);
+		Pauta pauta = pautaService.findById(id_pauta);
+		pauta.setResultadoVotacao(computaVotos);
+		return new ResponseEntity<Pauta>(pauta, HttpStatus.OK);
 	}
 }
