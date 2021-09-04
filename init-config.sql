@@ -1,4 +1,5 @@
 CREATE DATABASE IF NOT EXISTS votacao;
+USE votacao;
 CREATE USER 'registrovotacao'@'localhost' IDENTIFIED BY 'registrovotacao';
 GRANT ALL PRIVILEGES ON votacao. * TO 'registrovotacao'@'localhost';
 FLUSH PRIVILEGES;

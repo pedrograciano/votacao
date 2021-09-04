@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+    #service 1: definition of mysql database
+    db:
+      image: mysql-standalone
+      container_name: mysql-standalone   
+      build:
+        context: .    
+        dockerfile: Dockerfile_mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD=password
+        - MYSQL_DATABASE=votacao
+      ports:
+        - "3307:3306"
+      networks:
+        - votacao-network
+
+    
+    #service 3: definition of your spring-boot app 
+    customerservice:
+      image: votacao-app
+      container_name: votacao-app-container
+      build:
+        context: .    
+        dockerfile: Dockerfile
+      ports:
+        - "9090:8080"
+      networks:
+        - votacao-network         
+        
+      depends_on:             
+        - db
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://mysql-standalone:3306/votacao
+        SPRING_DATASOURCE_USERNAME: root
+        SPRING_DATASOURCE_PASSWORD: password
+
+networks:
+  votacao-network: 
