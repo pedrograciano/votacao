@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS votacao;
 USE votacao;
-CREATE USER 'registrovotacao'@'localhost' IDENTIFIED BY 'registrovotacao';
-GRANT ALL PRIVILEGES ON votacao. * TO 'registrovotacao'@'localhost';
+CREATE USER 'registrovotacao'@'127.0.0.1' IDENTIFIED BY 'registrovotacao';
+GRANT ALL PRIVILEGES ON votacao. * TO 'registrovotacao'@'127.0.0.1';
 FLUSH PRIVILEGES;
 
 -- MySQL dump 10.13  Distrib 8.0.26, for Win64 (x86_64)
@@ -41,7 +41,7 @@ CREATE TABLE `tbl_associados` (
 
 LOCK TABLES `tbl_associados` WRITE;
 /*!40000 ALTER TABLE `tbl_associados` DISABLE KEYS */;
-INSERT INTO `tbl_associados` VALUES ('1098765432','Maria Beltrana'),('string','string');
+INSERT INTO `tbl_associados` VALUES ('1098765432','Maria Beltrana');
 /*!40000 ALTER TABLE `tbl_associados` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
